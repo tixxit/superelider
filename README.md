@@ -27,6 +27,30 @@ can remove most logging statements by doing something like,
 `-P:superelider:elide-below:logger:5000`, then adding some back in by doing,
 `-P:superelider:elide-below:logger:my.package:1000`.
 
+Simple Example
+==============
+
+Create a file, Hello.scala:
+
+    import net.tixxit.superelider.elidable
+
+    object Hello {
+      @elidable("hello:hi", 200) def sayHi() { println("Hello, world!") }
+      @elidable("hello:bye", 100) def sayBye() { println("Goodbye, world!") }
+	  
+      def main(args: Array[String]) {
+        sayHi()
+        sayBye()
+      }
+    }
+
+You can now try compiling it with various options and running it:
+
+    -P:superelider:elide-below:150
+    -P:superelider:elide-below:hello:300
+    -P:superelider:elide-below:hello:300 -P:superelider:elide-below:hello:hi:0
+
+
 Building/Using
 ==============
 
