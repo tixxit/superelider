@@ -33,24 +33,16 @@ class SuperElider(val global: Global, plugin: SuperEliderPlugin)
       Literal(Constant()) setPos tree.pos setType UnitClass.tpe
 
     def isElidable(tree: Tree): Boolean = {
+      val elidable = for {
+        sym   <- Option(treeInfo.methPart(tree).symbol)
+        ann   <- (sym getAnnotation ElidableClass)
+        label <- ann stringArg 0
+        level <- ann intArg 1
+        min   <- (label.split(":").scanLeft(List[String]())(_ :+ _).reverse
+                    map (_ mkString ":") flatMap (elisionLevel(_)) headOption)
+      } yield (level < min)
 
-      // Get the symbol of the method from an Apply (and friends).
-      val sym = treeInfo.methPart(tree).symbol
-
-      if (sym != null) {
-        val elidable = for {
-          ann   <- (sym getAnnotation ElidableClass)
-          label <- ann stringArg 0
-          level <- ann intArg 1
-          min   <- (label.split(":").scanLeft(List[String]())(_ :+ _).reverse
-                      map (_ mkString ":") flatMap (elisionLevel(_)) headOption)
-        } yield (level < min)
-
-        elidable getOrElse false
-
-      } else {
-        false
-      }
+      elidable getOrElse false
     }
 
     def preTransform(tree: Tree): Tree = tree match {
