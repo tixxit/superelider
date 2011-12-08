@@ -1,0 +1,4 @@
+<plugin>
+  <name>superelider</name>
+  <classname>net.tixxit.superelider.SuperEliderPlugin</classname>
+</plugin>
