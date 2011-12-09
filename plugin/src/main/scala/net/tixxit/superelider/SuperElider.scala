@@ -36,8 +36,8 @@ class SuperElider(val global: Global, plugin: SuperEliderPlugin)
       val elidable = for {
         sym   <- Option(treeInfo.methPart(tree).symbol)
         ann   <- (sym getAnnotation ElidableClass)
-        label <- ann stringArg 0
-        level <- ann intArg 1
+        label <- ann stringArg 1
+        level <- ann intArg 0
         min   <- (label.split(":").scanLeft(List[String]())(_ :+ _).reverse
                     map (_ mkString ":") flatMap (elisionLevel(_)) headOption)
       } yield (level < min)

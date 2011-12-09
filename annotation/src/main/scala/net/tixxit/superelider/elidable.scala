@@ -2,7 +2,7 @@ package net.tixxit.superelider
 
 import scala.annotation.{ elidable => _, _ }
 
-final class elidable(final val label: String, final val level: Int) extends annotation.StaticAnnotation
+final class elidable(final val level: Int, final val label: String = "") extends annotation.StaticAnnotation
 
 object elidable {
   final val ALL = Int.MinValue
