@@ -52,6 +52,23 @@ You can now try compiling it with various options and running it:
     -P:superelider:elide-below:hello:300
     -P:superelider:elide-below:hello:300 -P:superelider:elide-below:hello:hi:0
 
+sbt
+===
+
+You can use this from sbt by adding the repository `http://repo.tixxit.net/`,
+add `"net.tixxit" %% "superelider-compiler-plugin" % "0.1"` as a compiler
+plugin and `"net.tixxit" %% "superelider-annotation" % "0.1"` as a library
+dependency and you should be good to go. Here is an example partial build.sbt:
+
+    resolvers += "Tom's Repo" at "http://repo.tixxit.net/"
+    
+    addCompilerPlugin("net.tixxit" %% "superelider-compiler-plugin" % "0.1")
+    
+    libraryDependencies += "net.tixxit" %% "superelider-annotation" % "0.1"
+
+
+Note: The plugin and library are currently only built against 2.9.1
+
 
 Building/Using
 ==============
